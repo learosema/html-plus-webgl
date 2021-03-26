@@ -1,0 +1,29 @@
+{
+  "name": "html-plus-webgl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "esbuild": "^0.10.1",
+    "three": "^0.126.1"
+  },
+  "devDependencies": {
+    "@types/three": "^0.126.2",
+    "browser-sync": "^2.26.14",
+    "esbuild-plugin-glsl": "^1.0.3",
+    "typescript": "^4.2.3"
+  },
+  "scripts": {
+    "start": "npm run build -s && node serve",
+    "test": "exit 0",
+    "build:js": "node build",
+    "build:html": "mkdir -p dist && cp src/*.{html,css} dist",
+    "build": "rm -rf dist && npm run build:html -s && npm run build:js -s",
+    "dev": "node dev",
+    "predeploy": "npm run build -s",
+    "deploy": "touch dist/.nojekyll && gh-pages -d dist"
+  },
+  "keywords": [],
+  "author": "Lea Rosema",
+  "license": "MIT"
+}
