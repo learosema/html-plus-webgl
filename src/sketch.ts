@@ -13,8 +13,12 @@ export class Sketch {
   height: number;
   controls: OrbitControls;
   scene = new THREE.Scene();
-  geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-  material = new THREE.ShaderMaterial({ vertexShader, fragmentShader });
+  geometry = new THREE.PlaneGeometry(0.5, 0.5, 100, 100);
+  material = new THREE.ShaderMaterial({
+    vertexShader,
+    fragmentShader,
+    side: THREE.DoubleSide,
+  });
   mesh = new THREE.Mesh(this.geometry, this.material);
   clock = new THREE.Clock();
   camera: THREE.PerspectiveCamera;
