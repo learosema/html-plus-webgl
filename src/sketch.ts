@@ -13,8 +13,11 @@ export class Sketch {
   height: number;
   controls: OrbitControls;
   scene = new THREE.Scene();
-  geometry = new THREE.PlaneGeometry(0.5, 0.5, 100, 100);
+  geometry = new THREE.PlaneGeometry(5, 5, 150, 150);
   material = new THREE.ShaderMaterial({
+    uniforms: {
+      time: { value: 0 },
+    },
     vertexShader,
     fragmentShader,
     side: THREE.DoubleSide,
@@ -40,12 +43,15 @@ export class Sketch {
       0.01,
       10
     );
+
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = true;
 
     this.onResize();
     window.addEventListener('resize', this.onResize, false);
+    this.mesh.rotation.x = (90 * Math.PI) / 180;
     this.camera.position.z = 1;
+    this.camera.position.y = 1;
     this.clock.start();
     this.addObjects();
     this.playing = true;
@@ -71,8 +77,7 @@ export class Sketch {
 
   render = () => {
     const time = this.clock.getElapsedTime();
-    //this.mesh.rotation.x = time * 1.2;
-    // this.mesh.rotation.y = time * 1.5;
+    this.material.uniforms.time.value = time;
     this.renderer.render(this.scene, this.camera);
     this.controls.update();
     this.frame = requestAnimationFrame(this.render);

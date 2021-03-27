@@ -1,3 +1,8 @@
+
+
+#define PI 3.141592654
+uniform float time; 
+varying float vNoise;
 //	Classic Perlin 3D Noise 
 //	by Stefan Gustavson
 //
@@ -73,6 +78,12 @@ float cnoise(vec3 P){
   return 2.2 * n_xyz;
 }
 
+
 void main() {
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  vec3 newPosition= position;
+  float noise = cnoise(vec3(position.x*4., position.y*4. + time,0.));
+  vNoise = noise;
+  // newPosition.z += 0.1 * sin(time + (newPosition.x + .25) * 2. * PI);
+  newPosition.z +=0.1*cnoise(vec3(position.x*4., position.y*4. + time, 0.));
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
 }
